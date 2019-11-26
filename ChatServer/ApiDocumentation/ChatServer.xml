@@ -16,6 +16,18 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="T:ChatServer.Controllers.AuthController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ChatServer.Controllers.AuthController.Login(WebApi.Core.Commands.GetTokenCommand)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:ChatServer.Startup">
             <summary>
             

@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using WebApi.Core.Commands;
 using WebApi.Infrastructure;
 using WebApi.Infrastructure.Data;
+using WebApi.Infrastructure.Data.Mapper;
 using WebApi.Infrastructure.Helpers;
 using WebApi.Infrastructure.Identity;
 
@@ -69,7 +70,7 @@ namespace ChatServer
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
             identityBuilder.AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(DataProfile));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

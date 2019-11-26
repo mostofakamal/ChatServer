@@ -7,6 +7,8 @@ using WebApi.Core.Interfaces.Repositories;
 using WebApi.Core.Interfaces.Services;
 using WebApi.Infrastructure.Auth;
 using WebApi.Infrastructure.Data.Repositories;
+using WebApi.Infrastructure.Logging;
+using ILogger = WebApi.Core.Interfaces.Services.ILogger;
 using Module = Autofac.Module;
 
 namespace WebApi.Infrastructure
@@ -20,7 +22,7 @@ namespace WebApi.Infrastructure
             builder.RegisterType<JwtTokenHandler>().As<IJwtTokenHandler>().SingleInstance().FindConstructorsWith(new InternalConstructorFinder());
             builder.RegisterType<TokenFactory>().As<ITokenFactory>().SingleInstance();
             builder.RegisterType<JwtTokenValidator>().As<IJwtTokenValidator>().SingleInstance().FindConstructorsWith(new InternalConstructorFinder());
-           // builder.RegisterType<Logger<>>().As<ILogger>().SingleInstance();
+            builder.RegisterType<Logger>().As<ILogger>().SingleInstance();
         }
     }
 
