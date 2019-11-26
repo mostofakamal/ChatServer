@@ -3,7 +3,7 @@
 namespace WebApi.Core.Commands
 {
 
-    public class CreatePlayerCommand: IRequest<CreatePlayerResponse>
+    public class CreatePlayerCommand : IRequest<CreatePlayerResponse>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

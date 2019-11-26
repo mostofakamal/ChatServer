@@ -9,4 +9,6 @@ namespace WebApi.Core.Interfaces.Repositories
         Task<Player> FindByName(string userName);
         Task<bool> CheckPassword(Player user, string password);
     }
+
+
 }
