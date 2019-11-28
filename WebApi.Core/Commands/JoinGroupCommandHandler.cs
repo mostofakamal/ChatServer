@@ -18,14 +18,12 @@ namespace WebApi.Core.Commands
     public class JoinGroupCommandHandler : IRequestHandler<JoinGroupCommand, Unit>
     {
         private readonly ISecurityDataProvider _securityDataProvider;
-        private readonly IPlayerRepository _playerRepository;
         private readonly IRepository<Group> _groupRepository;
         private readonly IRepository<PlayerGroupMapping> _playerGroupMappingRepository;
 
 
-        public JoinGroupCommandHandler(IPlayerRepository playerRepository, IRepository<Group> groupRepository, IRepository<PlayerGroupMapping> playerGroupMappingRepository, ISecurityDataProvider securityDataProvider)
+        public JoinGroupCommandHandler(IRepository<Group> groupRepository, IRepository<PlayerGroupMapping> playerGroupMappingRepository, ISecurityDataProvider securityDataProvider)
         {
-            _playerRepository = playerRepository;
             _groupRepository = groupRepository;
             _playerGroupMappingRepository = playerGroupMappingRepository;
             _securityDataProvider = securityDataProvider;
@@ -33,8 +31,7 @@ namespace WebApi.Core.Commands
 
         public async Task<Unit> Handle(JoinGroupCommand request, CancellationToken cancellationToken)
         {
-            var userName = _securityDataProvider.GetCurrentUserName();
-            var player = await _playerRepository.FindByName(userName);
+            var player = await _securityDataProvider.GetCurrentLoggedInPlayer();
             var group = await _groupRepository.GetSingleBySpec(new GroupSearchSpecification(request.GroupId));
             if (group.PlayerGroupMaps.Any(x => x.PlayerId == player.Id))
             {

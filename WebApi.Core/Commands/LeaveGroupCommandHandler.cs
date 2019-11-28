@@ -14,13 +14,11 @@ namespace WebApi.Core.Commands
     {
 
         private readonly ISecurityDataProvider _securityDataProvider;
-        private readonly IPlayerRepository _playerRepository;
         private readonly IRepository<Group> _groupRepository;
         private readonly IRepository<PlayerGroupMapping> _playerGroupMappingRepository;
 
-        public LeaveGroupCommandHandler(IPlayerRepository playerRepository, IRepository<Group> groupRepository, IRepository<PlayerGroupMapping> playerGroupMappingRepository, ISecurityDataProvider securityDataProvider)
+        public LeaveGroupCommandHandler(IRepository<Group> groupRepository, IRepository<PlayerGroupMapping> playerGroupMappingRepository, ISecurityDataProvider securityDataProvider)
         {
-            _playerRepository = playerRepository;
             _groupRepository = groupRepository;
             _playerGroupMappingRepository = playerGroupMappingRepository;
             _securityDataProvider = securityDataProvider;
@@ -29,8 +27,7 @@ namespace WebApi.Core.Commands
         public async Task<Unit> Handle(LeaveGroupCommand request, CancellationToken cancellationToken)
         {
 
-            var userName = _securityDataProvider.GetCurrentUserName();
-            var player = await _playerRepository.FindByName(userName);
+            var player = await _securityDataProvider.GetCurrentLoggedInPlayer();
             var group = await _groupRepository.GetSingleBySpec(new GroupSearchSpecification(request.GroupId));
             var groupMember = group.PlayerGroupMaps.SingleOrDefault(x => x.PlayerId == player.Id);
             if (groupMember == null)

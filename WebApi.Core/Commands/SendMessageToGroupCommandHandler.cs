@@ -13,20 +13,17 @@ namespace WebApi.Core.Commands
     public class SendMessageToGroupCommandHandler : IRequestHandler<SendMessageToGroupCommand>
     {
         private readonly IRepository<MessageHistory> _messageHistory;
-        private readonly IPlayerRepository _playerRepository;
         private readonly IRepository<PlayerGroupMapping> _groupMappingRepository;
         private readonly ISecurityDataProvider _securityDataProvider;
-        public SendMessageToGroupCommandHandler(IRepository<MessageHistory> messageHistory, IRepository<PlayerGroupMapping> groupMappingRepository, IPlayerRepository playerRepository, ISecurityDataProvider securityDataProvider)
+        public SendMessageToGroupCommandHandler(IRepository<MessageHistory> messageHistory, IRepository<PlayerGroupMapping> groupMappingRepository,ISecurityDataProvider securityDataProvider)
         {
             _messageHistory = messageHistory;
             _groupMappingRepository = groupMappingRepository;
-            _playerRepository = playerRepository;
             _securityDataProvider = securityDataProvider;
         }
         public async Task<Unit> Handle(SendMessageToGroupCommand request, CancellationToken cancellationToken)
         {
-            var player =
-                await _playerRepository.FindByName(_securityDataProvider.GetCurrentUserName());
+            var player =await _securityDataProvider.GetCurrentLoggedInPlayer();
             var groupMember =
                 await _groupMappingRepository.GetSingleBySpec(
                     new GetGroupMemberShipSpecification(player.Id, request.GroupId));

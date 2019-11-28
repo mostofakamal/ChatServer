@@ -12,7 +12,7 @@ namespace WebApi.Core.Specifications
 
     public sealed class GetAllMessageHistorySpecification : BaseSpecification<MessageHistory>
     {
-        public GetAllMessageHistorySpecification(int groupId,int playerId) : base(x => x.PlayerId == playerId && x.GroupId == groupId)
+        public GetAllMessageHistorySpecification(int groupId) : base(x=> x.GroupId == groupId)
         {
            
         }

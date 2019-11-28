@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -14,21 +15,25 @@ namespace WebApi.Core.Commands
     {
         private readonly ISecurityDataProvider _securityDataProvider;
         private readonly IRepository<MessageHistory> _messsageHistory;
-        private readonly IPlayerRepository _playerRepository;
+        private readonly IRepository<PlayerGroupMapping> _playerGroupMappingRepo;
 
-        public GetMessageOfGroupQueryHandler(ISecurityDataProvider securityDataProvider, IRepository<MessageHistory> messsageHistory, IPlayerRepository playerRepository)
+        public GetMessageOfGroupQueryHandler(ISecurityDataProvider securityDataProvider, IRepository<MessageHistory> messsageHistory, IRepository<PlayerGroupMapping> playerGroupMappingRepo)
         {
             _securityDataProvider = securityDataProvider;
             _messsageHistory = messsageHistory;
-            _playerRepository = playerRepository;
+            _playerGroupMappingRepo = playerGroupMappingRepo;
         }
 
         public async Task<GetMessagesOfGroupResult> Handle(GetMessagesOfGroupQuery request, CancellationToken cancellationToken)
         {
-            var userName =  _securityDataProvider.GetCurrentUserName();
-            var player = await _playerRepository.FindByName(userName);
+            var player = await _securityDataProvider.GetCurrentLoggedInPlayer();
+            var memberShip =await _playerGroupMappingRepo.GetSingleBySpec(new GetGroupMemberShipSpecification(player.Id, request.GroupId));
+            if (memberShip == null)
+            {
+                throw new InvalidOperationException("Can not retrieve messages of a group which the player has not joined yet");
+            }
             var allMessageHistory =
-                (await _messsageHistory.List(new GetAllMessageHistorySpecification(request.GroupId, player.Id))).Select(x=>new MessageDto
+                (await _messsageHistory.List(new GetAllMessageHistorySpecification(request.GroupId))).Select(x=>new MessageDto
                 {
                     PlayerId = x.PlayerId,
                     GroupId = x.GroupId,

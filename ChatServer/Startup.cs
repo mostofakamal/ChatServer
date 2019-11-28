@@ -112,10 +112,11 @@ namespace ChatServer
                             }
                         });
                 });
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            app.UseExceptionHandler("/error");
 
             app.ConfigureSwagger();
             app.UseCors(Constants.Strings.CorsPolicy.Name);

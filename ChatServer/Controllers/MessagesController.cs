@@ -34,7 +34,7 @@ namespace ChatServer.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("groups/{groupId}")]
+        [Route("groups/{groupId:int}")]
         public async Task<IActionResult> SendMessage(int groupId,SendMessageDto request)
         {
             return Ok(await _mediatR.Send(new SendMessageToGroupCommand(groupId, request.Message)));
@@ -46,7 +46,7 @@ namespace ChatServer.Controllers
         /// <param name="groupId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("groups/{groupId}")]
+        [Route("groups/{groupId:int}")]
         public async Task<IActionResult> GetAllMessageHistory(int groupId)
         {
             return Ok(await _mediatR.Send(new GetMessagesOfGroupQuery(groupId)));

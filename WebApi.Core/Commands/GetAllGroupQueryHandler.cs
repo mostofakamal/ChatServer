@@ -13,26 +13,22 @@ namespace WebApi.Core.Commands
     public class GetAllGroupQueryHandler : IRequestHandler<GetAllGroupQuery, GetAllGroupQueryResult>
     {
         private readonly IRepository<Group> _groupRepository;
-        private readonly IPlayerRepository _playerRepository;
         private readonly ISecurityDataProvider _securityDataProvider;
         public GetAllGroupQueryHandler(IRepository<Group> groupRepository,
-            IPlayerRepository playerRepository, ISecurityDataProvider securityDataProvider)
+            ISecurityDataProvider securityDataProvider)
         {
             _groupRepository = groupRepository;
-            _playerRepository = playerRepository;
             _securityDataProvider = securityDataProvider;
         }
         public async Task<GetAllGroupQueryResult> Handle(GetAllGroupQuery request, CancellationToken cancellationToken)
         {
             var groups = await _groupRepository.List(new GetAllGroupSpecification());
-            var player =
-                _playerRepository.GetSingleBySpec(
-                    new PlayerSearchSpecification(_securityDataProvider.GetCurrentUserName()));
-            var result = groups.Select(x => new GroupDto
+            var player = await _securityDataProvider.GetCurrentLoggedInPlayer();
+            var result = groups?.Select(x => new GroupDto
             {
                 Name = x.Name,
                 GroupId = x.Id,
-                IsMember = x.PlayerGroupMaps.Any(y => y.PlayerId == player.Id)
+                IsMember =  x.PlayerGroupMaps.Any(y=>y.PlayerId == player.Id)
             }).ToList();
             return new GetAllGroupQueryResult(result);
         }

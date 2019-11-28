@@ -85,7 +85,7 @@ namespace ChatServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            var result = await _mediatR.Send(new JoinGroupCommand(id));
+            var result = await _mediatR.Send(new LeaveGroupCommand(id));
             return Ok(result);
         }
 
