@@ -22,19 +22,19 @@ namespace WebApi.Core.Commands
             if (!string.IsNullOrEmpty(request.UserName) && !string.IsNullOrEmpty(request.Password))
             {
                 // ensure we have a user with the given user name
-                var user = await _playerRepository.FindByName(request.UserName);
-                if (user != null)
+                var player = await _playerRepository.FindByName(request.UserName);
+                if (player != null)
                 {
                     // validate password
-                    if (await _playerRepository.CheckPassword(user, request.Password))
+                    if (await _playerRepository.CheckPassword(player, request.Password))
                     {
                         // generate refresh token
                         var refreshToken = _tokenFactory.GenerateToken();
-                        user.AddRefreshToken(refreshToken, user.Id, request.RemoteIpAddress);
-                        await _playerRepository.Update(user);
+                        player.AddRefreshToken(refreshToken, player.Id, request.RemoteIpAddress);
+                        await _playerRepository.Update(player);
 
                         // generate access token
-                        var generateEncodedToken = await _jwtFactory.GenerateEncodedToken(user.IdentityId, user.UserName);
+                        var generateEncodedToken = await _jwtFactory.GenerateEncodedToken(player.IdentityId, player.UserName);
                         return new GetTokenResponse{
                             AccessToken = generateEncodedToken,
                             RefreshToken = refreshToken

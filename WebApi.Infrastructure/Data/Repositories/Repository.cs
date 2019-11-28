@@ -8,11 +8,11 @@ using WebApi.Core.Interfaces.Repositories;
 namespace WebApi.Infrastructure.Data.Repositories
 {
 
-    public class EfRepository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly GameDbContext GameDbContext;
 
-        public EfRepository(GameDbContext gameDbContext)
+        public Repository(GameDbContext gameDbContext)
         {
             GameDbContext = gameDbContext;
         }

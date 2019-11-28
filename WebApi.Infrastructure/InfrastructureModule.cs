@@ -19,8 +19,9 @@ namespace WebApi.Infrastructure
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
-            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
             builder.RegisterType<PlayerRepository>().As<IPlayerRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<SecurityDataProvider>().As<ISecurityDataProvider>().InstancePerLifetimeScope();
             builder.RegisterType<JwtFactory>().As<IJwtFactory>().SingleInstance().FindConstructorsWith(new InternalConstructorFinder());
             builder.RegisterType<JwtTokenHandler>().As<IJwtTokenHandler>().SingleInstance().FindConstructorsWith(new InternalConstructorFinder());
             builder.RegisterType<TokenFactory>().As<ITokenFactory>().SingleInstance();

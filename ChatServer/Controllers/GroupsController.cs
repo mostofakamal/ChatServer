@@ -21,6 +21,18 @@ namespace ChatServer.Controllers
             _mediatR = mediatR;
         }
 
+
+
+        /// <summary>
+        /// Gets all groups
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _mediatR.Send(new GetAllGroupQuery()));
+        }
+
         // POST api/groups
         /// <summary>
         /// Creates Group
@@ -44,11 +56,29 @@ namespace ChatServer.Controllers
         /// Joins a group
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("groups/{id}/player")]
         public async Task<IActionResult> JoinGroup(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _mediatR.Send(new JoinGroupCommand(id));
+            return Ok(result);
+        }
+
+        // POST api/groups
+        /// <summary>
+        /// Leaves a group
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("groups/{id}/player")]
+        public async Task<IActionResult> LeaveGroup(int id)
         {
             if (!ModelState.IsValid)
             {

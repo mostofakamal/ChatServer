@@ -78,9 +78,8 @@ namespace WebApi.Infrastructure.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    GroupId = table.Column<int>(nullable: false),
-                    PlayerId = table.Column<int>(nullable: true)
+                    PlayerId = table.Column<int>(nullable: false),
+                    GroupId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,7 +95,7 @@ namespace WebApi.Infrastructure.Migrations
                         column: x => x.PlayerId,
                         principalTable: "Players",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,9 +108,8 @@ namespace WebApi.Infrastructure.Migrations
                     Modified = table.Column<DateTime>(nullable: false),
                     Token = table.Column<string>(nullable: true),
                     Expires = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    RemoteIpAddress = table.Column<string>(nullable: true),
-                    PlayerId = table.Column<int>(nullable: true)
+                    PlayerId = table.Column<int>(nullable: false),
+                    RemoteIpAddress = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -121,7 +119,7 @@ namespace WebApi.Infrastructure.Migrations
                         column: x => x.PlayerId,
                         principalTable: "Players",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

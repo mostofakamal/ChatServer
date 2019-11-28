@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using System;
+using System.Linq;
+using MediatR;
 
 namespace WebApi.Core.Commands
 {
@@ -11,6 +13,5 @@ namespace WebApi.Core.Commands
         }
 
         public int GroupId { get; }
-
     }
 }

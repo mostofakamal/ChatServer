@@ -1,29 +1,24 @@
 ﻿using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using WebApi.Core.Domain.Entities;
-using WebApi.Core.Dto;
 using WebApi.Core.Interfaces.Repositories;
 using WebApi.Core.Interfaces.Services;
 using WebApi.Core.Specifications;
 
 namespace WebApi.Core.Commands
 {
-    public class JoinGroupCommandHandler : IRequestHandler<JoinGroupCommand, Unit>
+    public class LeaveGroupCommandHandler : IRequestHandler<LeaveGroupCommand, Unit>
     {
+
         private readonly ISecurityDataProvider _securityDataProvider;
         private readonly IPlayerRepository _playerRepository;
         private readonly IRepository<Group> _groupRepository;
         private readonly IRepository<PlayerGroupMapping> _playerGroupMappingRepository;
 
-
-        public JoinGroupCommandHandler(IPlayerRepository playerRepository, IRepository<Group> groupRepository, IRepository<PlayerGroupMapping> playerGroupMappingRepository, ISecurityDataProvider securityDataProvider)
+        public LeaveGroupCommandHandler(IPlayerRepository playerRepository, IRepository<Group> groupRepository, IRepository<PlayerGroupMapping> playerGroupMappingRepository, ISecurityDataProvider securityDataProvider)
         {
             _playerRepository = playerRepository;
             _groupRepository = groupRepository;
@@ -31,23 +26,19 @@ namespace WebApi.Core.Commands
             _securityDataProvider = securityDataProvider;
         }
 
-        public async Task<Unit> Handle(JoinGroupCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(LeaveGroupCommand request, CancellationToken cancellationToken)
         {
+
             var userName = _securityDataProvider.GetCurrentUserName();
             var player = await _playerRepository.FindByName(userName);
             var group = await _groupRepository.GetSingleBySpec(new GroupSearchSpecification(request.GroupId));
-            if (group.PlayerGroupMaps.Any(x => x.PlayerId == player.Id))
+            var groupMember = group.PlayerGroupMaps.SingleOrDefault(x => x.PlayerId == player.Id);
+            if (groupMember == null)
             {
-                throw new InvalidOperationException("Player already joined the group");
+                throw new InvalidOperationException("Player is not member of the group");
             }
-            var playerGroupMapping = new PlayerGroupMapping
-            {
-                PlayerId = player.Id,
-                GroupId = group.Id,
-                Created = DateTime.UtcNow,
-                Modified = DateTime.UtcNow
-            };
-            await _playerGroupMappingRepository.Add(playerGroupMapping);
+
+            await _playerGroupMappingRepository.Delete(groupMember);
             return Unit.Value;
         }
     }

@@ -10,7 +10,7 @@ using WebApi.Infrastructure.Data;
 namespace WebApi.Infrastructure.Migrations
 {
     [DbContext(typeof(GameDbContext))]
-    [Migration("20191126104304_Initial")]
+    [Migration("20191127045954_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,9 +98,7 @@ namespace WebApi.Infrastructure.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int?>("PlayerId");
-
-                    b.Property<int>("UserId");
+                    b.Property<int>("PlayerId");
 
                     b.HasKey("Id");
 
@@ -123,13 +121,11 @@ namespace WebApi.Infrastructure.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int?>("PlayerId");
+                    b.Property<int>("PlayerId");
 
                     b.Property<string>("RemoteIpAddress");
 
                     b.Property<string>("Token");
-
-                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -160,14 +156,16 @@ namespace WebApi.Infrastructure.Migrations
 
                     b.HasOne("WebApi.Core.Domain.Entities.Player", "Player")
                         .WithMany("PlayerGroupMaps")
-                        .HasForeignKey("PlayerId");
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebApi.Core.Domain.Entities.RefreshToken", b =>
                 {
                     b.HasOne("WebApi.Core.Domain.Entities.Player")
                         .WithMany("RefreshTokens")
-                        .HasForeignKey("PlayerId");
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

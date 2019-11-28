@@ -33,6 +33,12 @@
             The groups Controller
             </summary>
         </member>
+        <member name="M:ChatServer.Controllers.GroupsController.GetAll">
+            <summary>
+            Gets all groups
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ChatServer.Controllers.GroupsController.Post(WebApi.Core.Commands.CreateGroupCommand)">
             <summary>
             Creates Group
@@ -45,8 +51,45 @@
             Joins a group
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChatServer.Controllers.GroupsController.LeaveGroup(System.Int32)">
+            <summary>
+            Leaves a group
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatServer.Controllers.MessagesController">
+            <summary>
+            The groups Controller
+            </summary>
+        </member>
+        <member name="M:ChatServer.Controllers.MessagesController.#ctor(MediatR.IMediator)">
+            <summary>
+            The Message controller
+            </summary>
+            <param name="mediatR"></param>
+        </member>
+        <member name="M:ChatServer.Controllers.MessagesController.SendMessage(System.Int32,ChatServer.Dtos.SendMessageDto)">
+            <summary>
+            Sends message to a group
+            </summary>
+            <param name="groupId"></param>
             <param name="request"></param>
             <returns></returns>
+        </member>
+        <member name="M:ChatServer.Controllers.MessagesController.GetAllMessageHistory(System.Int32)">
+            <summary>
+            Gets all message of a group
+            </summary>
+            <param name="groupId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ChatServer.Hubs.MessageHub">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:ChatServer.Startup">
             <summary>

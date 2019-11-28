@@ -6,15 +6,15 @@ namespace WebApi.Core.Domain.Entities
     {
         public string Token { get; private set; }
         public DateTime Expires { get; private set; }
-        public int UserId { get; private set; }
+        public int PlayerId { get; private set; }
         public bool Active => DateTime.UtcNow <= Expires;
         public string RemoteIpAddress { get; private set; }
 
-        public RefreshToken(string token, DateTime expires, int userId, string remoteIpAddress)
+        public RefreshToken(string token, DateTime expires, int playerId, string remoteIpAddress)
         {
             Token = token;
             Expires = expires;
-            UserId = userId;
+            PlayerId = playerId;
             RemoteIpAddress = remoteIpAddress;
         }
     }

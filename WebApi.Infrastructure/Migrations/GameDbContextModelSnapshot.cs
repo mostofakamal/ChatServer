@@ -96,9 +96,7 @@ namespace WebApi.Infrastructure.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int?>("PlayerId");
-
-                    b.Property<int>("UserId");
+                    b.Property<int>("PlayerId");
 
                     b.HasKey("Id");
 
@@ -121,13 +119,11 @@ namespace WebApi.Infrastructure.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int?>("PlayerId");
+                    b.Property<int>("PlayerId");
 
                     b.Property<string>("RemoteIpAddress");
 
                     b.Property<string>("Token");
-
-                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -158,14 +154,16 @@ namespace WebApi.Infrastructure.Migrations
 
                     b.HasOne("WebApi.Core.Domain.Entities.Player", "Player")
                         .WithMany("PlayerGroupMaps")
-                        .HasForeignKey("PlayerId");
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebApi.Core.Domain.Entities.RefreshToken", b =>
                 {
                     b.HasOne("WebApi.Core.Domain.Entities.Player")
                         .WithMany("RefreshTokens")
-                        .HasForeignKey("PlayerId");
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

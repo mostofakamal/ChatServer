@@ -2,7 +2,7 @@
 {
     public class PlayerGroupMapping : BaseEntity
     {
-        public int UserId { get; set; }
+        public int PlayerId { get; set; }
 
         public int GroupId { get; set; }
 

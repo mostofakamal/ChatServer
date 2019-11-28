@@ -8,7 +8,7 @@ using WebApi.Infrastructure.Identity;
 
 namespace WebApi.Infrastructure.Data.Repositories
 {
-    internal sealed class PlayerRepository : EfRepository<Player>, IPlayerRepository
+    internal sealed class PlayerRepository : Repository<Player>, IPlayerRepository
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;

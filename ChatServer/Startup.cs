@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net;
-using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using ChatServer.Extensions;
+using ChatServer.Hubs;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -70,6 +70,8 @@ namespace ChatServer
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
             identityBuilder.AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
 
+
+            services.AddSignalR();
             services.AddAutoMapper(typeof(DataProfile));
 
 
@@ -119,6 +121,10 @@ namespace ChatServer
             app.UseCors(Constants.Strings.CorsPolicy.Name);
 
             app.UseAuthentication();
+            app.UseSignalR(options =>
+            {
+                options.MapHub<MessageHub>("/MessageHub");
+            });
             InitializeDatabase(app);
             app.UseMvc();
         }

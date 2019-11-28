@@ -33,9 +33,9 @@ namespace WebApi.Core.Domain.Entities
             return _refreshTokens.Any(rt => rt.Token == refreshToken && rt.Active);
         }
 
-        public void AddRefreshToken(string token, int userId, string remoteIpAddress, double daysToExpire = 5)
+        public void AddRefreshToken(string token, int playerId, string remoteIpAddress, double daysToExpire = 5)
         {
-            _refreshTokens.Add(new RefreshToken(token, DateTime.UtcNow.AddDays(daysToExpire), userId, remoteIpAddress));
+            _refreshTokens.Add(new RefreshToken(token, DateTime.UtcNow.AddDays(daysToExpire), playerId, remoteIpAddress));
         }
 
         public void RemoveRefreshToken(string refreshToken)
