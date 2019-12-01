@@ -8,7 +8,7 @@ using WebApi.Core.Interfaces.Repositories;
 namespace WebApi.Infrastructure.Data.Repositories
 {
 
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository : IRepository
     {
         protected readonly GameDbContext GameDbContext;
 
@@ -17,23 +17,23 @@ namespace WebApi.Infrastructure.Data.Repositories
             GameDbContext = gameDbContext;
         }
 
-        public virtual async Task<T> GetById(int id)
+        public virtual async Task<T> GetById<T>(int id) where T : BaseEntity
         {
             return await GameDbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<List<T>> ListAll()
+        public async Task<List<T>> ListAll<T>() where T : BaseEntity
         {
             return await GameDbContext.Set<T>().ToListAsync();
         }
 
-        public async Task<T> GetSingleBySpec(ISpecification<T> spec)
+        public async Task<T> GetSingleBySpec<T>(ISpecification<T> spec) where T : BaseEntity
         {
             var result = await List(spec);
             return result.FirstOrDefault();
         }
 
-        public async Task<List<T>> List(ISpecification<T> spec)
+        public async Task<List<T>> List<T>(ISpecification<T> spec) where T : BaseEntity
         {
             // fetch a Queryable that includes all expression-based includes
             var queryableResultWithIncludes = spec.Includes
@@ -52,20 +52,20 @@ namespace WebApi.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<T> Add(T entity)
+        public async Task<T> Add<T>(T entity) where T : BaseEntity
         {
             GameDbContext.Set<T>().Add(entity);
             await GameDbContext.SaveChangesAsync();
             return entity;
         }
 
-        public async Task Update(T entity)
+        public async Task Update<T>(T entity) where T : BaseEntity
         {
             GameDbContext.Entry(entity).State = EntityState.Modified;
             await GameDbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(T entity)
+        public async Task Delete<T>(T entity) where T : BaseEntity
         {
             GameDbContext.Set<T>().Remove(entity);
             await GameDbContext.SaveChangesAsync();

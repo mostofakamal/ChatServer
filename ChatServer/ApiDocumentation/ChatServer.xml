@@ -65,7 +65,7 @@
             The groups Controller
             </summary>
         </member>
-        <member name="M:ChatServer.Controllers.MessagesController.#ctor(MediatR.IMediator)">
+        <member name="M:ChatServer.Controllers.MessagesController.#ctor(MediatR.IMediator,Microsoft.AspNetCore.SignalR.IHubContext{ChatServer.Hubs.MessageHub})">
             <summary>
             The Message controller
             </summary>
@@ -88,7 +88,7 @@
         </member>
         <member name="T:ChatServer.Hubs.MessageHub">
             <summary>
-            
+            The Message Hub 
             </summary>
         </member>
         <member name="T:ChatServer.Startup">

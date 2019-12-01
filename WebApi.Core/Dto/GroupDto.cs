@@ -17,6 +17,8 @@ namespace WebApi.Core.Dto
 
        public int PlayerId { get; set; }
 
+       public string PlayerName { get; set; }
+
        public string Message { get; set; }
 
        public DateTime SentOn { get; set; }

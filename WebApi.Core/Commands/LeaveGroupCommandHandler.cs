@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using WebApi.Core.Domain.Entities;
 using WebApi.Core.Interfaces.Repositories;
 using WebApi.Core.Interfaces.Services;
 using WebApi.Core.Specifications;
@@ -14,13 +13,11 @@ namespace WebApi.Core.Commands
     {
 
         private readonly ISecurityDataProvider _securityDataProvider;
-        private readonly IRepository<Group> _groupRepository;
-        private readonly IRepository<PlayerGroupMapping> _playerGroupMappingRepository;
+        private readonly IRepository _repository;
 
-        public LeaveGroupCommandHandler(IRepository<Group> groupRepository, IRepository<PlayerGroupMapping> playerGroupMappingRepository, ISecurityDataProvider securityDataProvider)
+        public LeaveGroupCommandHandler(IRepository repository, ISecurityDataProvider securityDataProvider)
         {
-            _groupRepository = groupRepository;
-            _playerGroupMappingRepository = playerGroupMappingRepository;
+            _repository = repository;
             _securityDataProvider = securityDataProvider;
         }
 
@@ -28,14 +25,14 @@ namespace WebApi.Core.Commands
         {
 
             var player = await _securityDataProvider.GetCurrentLoggedInPlayer();
-            var group = await _groupRepository.GetSingleBySpec(new GroupSearchSpecification(request.GroupId));
+            var group = await _repository.GetSingleBySpec(new GroupSearchSpecification(request.GroupId));
             var groupMember = group.PlayerGroupMaps.SingleOrDefault(x => x.PlayerId == player.Id);
             if (groupMember == null)
             {
                 throw new InvalidOperationException("Player is not member of the group");
             }
 
-            await _playerGroupMappingRepository.Delete(groupMember);
+            await _repository.Delete(groupMember);
             return Unit.Value;
         }
     }

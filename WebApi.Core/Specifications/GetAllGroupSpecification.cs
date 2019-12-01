@@ -14,7 +14,7 @@ namespace WebApi.Core.Specifications
     {
         public GetAllMessageHistorySpecification(int groupId) : base(x=> x.GroupId == groupId)
         {
-           
+           AddInclude(x=>x.Player);
         }
     }
 }

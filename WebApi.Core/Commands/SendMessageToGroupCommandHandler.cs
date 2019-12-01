@@ -1,31 +1,29 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using WebApi.Core.Domain.Entities;
+using WebApi.Core.Dto;
 using WebApi.Core.Interfaces.Repositories;
 using WebApi.Core.Interfaces.Services;
 using WebApi.Core.Specifications;
 
 namespace WebApi.Core.Commands
 {
-    public class SendMessageToGroupCommandHandler : IRequestHandler<SendMessageToGroupCommand>
+    public class SendMessageToGroupCommandHandler : IRequestHandler<SendMessageToGroupCommand,MessageDto>
     {
-        private readonly IRepository<MessageHistory> _messageHistory;
-        private readonly IRepository<PlayerGroupMapping> _groupMappingRepository;
+        private readonly IRepository _repository;
         private readonly ISecurityDataProvider _securityDataProvider;
-        public SendMessageToGroupCommandHandler(IRepository<MessageHistory> messageHistory, IRepository<PlayerGroupMapping> groupMappingRepository,ISecurityDataProvider securityDataProvider)
+        public SendMessageToGroupCommandHandler(IRepository repository, ISecurityDataProvider securityDataProvider)
         {
-            _messageHistory = messageHistory;
-            _groupMappingRepository = groupMappingRepository;
+            _repository = repository;
             _securityDataProvider = securityDataProvider;
         }
-        public async Task<Unit> Handle(SendMessageToGroupCommand request, CancellationToken cancellationToken)
+        public async Task<MessageDto> Handle(SendMessageToGroupCommand request, CancellationToken cancellationToken)
         {
-            var player =await _securityDataProvider.GetCurrentLoggedInPlayer();
+            var player = await _securityDataProvider.GetCurrentLoggedInPlayer();
             var groupMember =
-                await _groupMappingRepository.GetSingleBySpec(
+                await _repository.GetSingleBySpec(
                     new GetGroupMemberShipSpecification(player.Id, request.GroupId));
             if (groupMember == null)
             {
@@ -40,8 +38,15 @@ namespace WebApi.Core.Commands
                 Created = DateTime.UtcNow,
                 Modified = DateTime.UtcNow
             };
-            await _messageHistory.Add(messageHistory);
-            return Unit.Value;
+            await _repository.Add(messageHistory);
+            return new MessageDto()
+            {
+                PlayerId = messageHistory.PlayerId,
+                PlayerName = player.UserName,
+                GroupId = messageHistory.GroupId,
+                Message = request.Message,
+                SentOn = messageHistory.Created
+            };
         }
     }
 }

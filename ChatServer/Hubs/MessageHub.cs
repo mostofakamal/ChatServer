@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.SignalR;
 namespace ChatServer.Hubs
 {
     /// <summary>
-    /// 
+    /// The Message Hub 
     /// </summary>
-   // [Authorize]
+    [Authorize]
     public class MessageHub : Hub
     {
-        public async Task NewMessage(Message msg)
+        public async Task ConnectToGroup(string groupId)
         {
-            await Clients.All.SendAsync("MessageReceived", msg);
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
         }
 
-        public async Task SendMessageToGroup(Message msg, string groupName)
+        public async Task RemoveFromGroup(string groupId)
         {
-            await Clients.Group(groupName).SendAsync("MessageReceived", msg);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupId);
         }
 
         public string GetConnectionId()

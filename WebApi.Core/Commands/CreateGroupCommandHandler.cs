@@ -9,9 +9,9 @@ namespace WebApi.Core.Commands
 {
     public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, CreateGroupResponse>
     {
-        private readonly IRepository<Group> _repository;
+        private readonly IRepository _repository;
 
-        public CreateGroupCommandHandler(IRepository<Group> repository)
+        public CreateGroupCommandHandler(IRepository repository)
         {
             _repository = repository;
         }
