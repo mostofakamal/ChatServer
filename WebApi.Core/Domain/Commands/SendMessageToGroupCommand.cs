@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using WebApi.Core.Dto;
 
-namespace WebApi.Core.Commands
+namespace WebApi.Core.Domain.Commands
 {
     public class SendMessageToGroupCommand : IRequest<MessageDto>
     {

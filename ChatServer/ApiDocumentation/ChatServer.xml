@@ -9,7 +9,7 @@
             The Account Controller
             </summary>
         </member>
-        <member name="M:ChatServer.Controllers.AccountsController.Post(WebApi.Core.Commands.CreatePlayerCommand)">
+        <member name="M:ChatServer.Controllers.AccountsController.Post(WebApi.Core.Domain.Commands.CreatePlayerCommand)">
             <summary>
             Creates Player
             </summary>
@@ -21,7 +21,7 @@
             
             </summary>
         </member>
-        <member name="M:ChatServer.Controllers.AuthController.Login(WebApi.Core.Commands.GetTokenCommand)">
+        <member name="M:ChatServer.Controllers.AuthController.Login(WebApi.Core.Domain.Queries.GetTokenCommand)">
             <summary>
             
             </summary>
@@ -39,7 +39,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ChatServer.Controllers.GroupsController.Post(WebApi.Core.Commands.CreateGroupCommand)">
+        <member name="M:ChatServer.Controllers.GroupsController.Post(WebApi.Core.Domain.Commands.CreateGroupCommand)">
             <summary>
             Creates Group
             </summary>

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
-using MediatR;
+﻿using MediatR;
 
-namespace WebApi.Core.Commands
+namespace WebApi.Core.Domain.Commands
 {
     public class JoinGroupCommand : IRequest
     {

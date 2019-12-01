@@ -1,6 +1,6 @@
 ﻿using WebApi.Core.Dto;
 
-namespace WebApi.Core.Commands
+namespace WebApi.Core.Domain.Queries
 {
     public class GetTokenResponse
     {

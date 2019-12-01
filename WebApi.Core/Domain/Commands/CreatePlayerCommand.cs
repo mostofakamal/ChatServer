@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace WebApi.Core.Commands
+namespace WebApi.Core.Domain.Commands
 {
 
     public class CreatePlayerCommand : IRequest<CreatePlayerResponse>

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-using WebApi.Core.Domain.Entities;
+﻿using WebApi.Core.Domain.Entities;
 
 namespace WebApi.Core.Specifications
 {

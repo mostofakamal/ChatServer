@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Core.Commands;
+using WebApi.Core.Domain.Commands;
+using WebApi.Core.Domain.Queries;
 
 namespace ChatServer.Controllers
 {

@@ -10,12 +10,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebApi.Core.Commands;
+using WebApi.Core.Domain.Commands;
 using WebApi.Infrastructure;
 using WebApi.Infrastructure.Data;
 using WebApi.Infrastructure.Data.Mapper;
@@ -54,22 +53,7 @@ namespace ChatServer
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly(typeof(AppIdentityDbContext).Assembly.FullName)));
             services.AddDbContext<GameDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly(typeof(GameDbContext).Assembly.FullName)));
 
-            services.ConfigureAuthentication(Configuration);
-
-            // add identity
-            var identityBuilder = services.AddIdentityCore<AppUser>(o =>
-            {
-                // configure identity options
-                o.Password.RequireDigit = false;
-                o.Password.RequireLowercase = false;
-                o.Password.RequireUppercase = false;
-                o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 6;
-            });
-
-            identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
-            identityBuilder.AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
-
+            services.ConfigureAuthentication(Configuration).ConfigureIdentity();
 
             services.AddSignalR();
             services.AddAutoMapper(typeof(DataProfile));
@@ -112,10 +96,7 @@ namespace ChatServer
                             }
                         });
                 });
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
+          
             app.UseExceptionHandler("/error");
 
             app.ConfigureSwagger();

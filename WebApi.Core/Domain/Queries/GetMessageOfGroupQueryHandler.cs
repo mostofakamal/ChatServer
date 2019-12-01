@@ -9,7 +9,7 @@ using WebApi.Core.Interfaces.Repositories;
 using WebApi.Core.Interfaces.Services;
 using WebApi.Core.Specifications;
 
-namespace WebApi.Core.Commands
+namespace WebApi.Core.Domain.Queries
 {
     public class GetMessageOfGroupQueryHandler : IRequestHandler<GetMessagesOfGroupQuery, IList<MessageDto>>
     {

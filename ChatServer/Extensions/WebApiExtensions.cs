@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ChatServer.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +15,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using WebApi.Core.Dto;
 using WebApi.Infrastructure.Auth;
 using WebApi.Infrastructure.Helpers;
+using WebApi.Infrastructure.Identity;
 
 namespace ChatServer.Extensions
 {
@@ -25,7 +26,7 @@ namespace ChatServer.Extensions
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Sample APP", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "Chat Server", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
                     In = "header",
@@ -144,6 +145,24 @@ namespace ChatServer.Extensions
                     .WithOrigins(allowedCorsOrigins)
                     .AllowCredentials();
             }));
+            return services;
+        }
+
+        public static IServiceCollection ConfigureIdentity(this IServiceCollection services)
+        {
+            // add identity
+            var identityBuilder = services.AddIdentityCore<AppUser>(o =>
+            {
+                // configure identity options
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
+            });
+
+            identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
+            identityBuilder.AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
             return services;
         }
 

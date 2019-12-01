@@ -3,13 +3,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using WebApi.Core.Domain.Entities;
 using WebApi.Core.Dto;
 using WebApi.Core.Interfaces.Repositories;
 using WebApi.Core.Interfaces.Services;
 using WebApi.Core.Specifications;
 
-namespace WebApi.Core.Commands
+namespace WebApi.Core.Domain.Queries
 {
     public class GetAllGroupQueryHandler : IRequestHandler<GetAllGroupQuery, IList<GroupDto>>
     {

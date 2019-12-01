@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using WebApi.Core.Interfaces.Repositories;
 
-namespace WebApi.Core.Commands
+namespace WebApi.Core.Domain.Commands
 {
     public class CreatePlayerCommandHandler : IRequestHandler<CreatePlayerCommand, CreatePlayerResponse>
     {

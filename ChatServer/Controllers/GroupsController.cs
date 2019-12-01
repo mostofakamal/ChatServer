@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
-using ChatServer.Hubs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using WebApi.Core.Commands;
+using WebApi.Core.Domain.Commands;
+using WebApi.Core.Domain.Queries;
 
 namespace ChatServer.Controllers
 {

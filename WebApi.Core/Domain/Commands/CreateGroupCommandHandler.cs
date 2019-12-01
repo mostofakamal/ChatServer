@@ -5,7 +5,7 @@ using MediatR;
 using WebApi.Core.Domain.Entities;
 using WebApi.Core.Interfaces.Repositories;
 
-namespace WebApi.Core.Commands
+namespace WebApi.Core.Domain.Commands
 {
     public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, CreateGroupResponse>
     {

@@ -4,7 +4,7 @@ using MediatR;
 using WebApi.Core.Interfaces.Repositories;
 using WebApi.Core.Interfaces.Services;
 
-namespace WebApi.Core.Commands
+namespace WebApi.Core.Domain.Queries
 {
     public class GetTokenCommandHandler : IRequestHandler<GetTokenCommand,GetTokenResponse>
     {
