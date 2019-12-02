@@ -37,7 +37,7 @@ namespace WebApi.Core.Domain.Commands
 
             int maxAllowedGroupMemberCount = int.Parse(_configuration["MaxAllowedGroupMemberCount"]);
 
-            if (group.PlayerGroupMaps.Count < maxAllowedGroupMemberCount)
+            if (group.PlayerGroupMaps.Count >= maxAllowedGroupMemberCount)
             {
                 throw new InvalidOperationException($"Max group member limit exceeded. Allowed Limit: "+ maxAllowedGroupMemberCount);
             }
