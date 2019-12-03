@@ -137,7 +137,7 @@ namespace ChatServer.Extensions
         {
             var corsOrigins = config["AllowCorsOrigins"];
             var allowedCorsOrigins =
-                string.IsNullOrEmpty(corsOrigins) ? "*" : corsOrigins;
+                string.IsNullOrEmpty(corsOrigins) ? new []{"*"} : corsOrigins.Split(",");
             services.AddCors(o => o.AddPolicy(Constants.Strings.CorsPolicy.Name, x =>
             {
                 x.AllowAnyMethod()

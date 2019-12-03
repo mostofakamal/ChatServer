@@ -55,12 +55,13 @@ namespace ChatServer
 
             services.ConfigureAuthentication(Configuration).ConfigureIdentity();
 
+            services.ConfigureCors(Configuration);
             services.AddSignalR();
             services.AddAutoMapper(typeof(DataProfile));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.ConfigureCors(Configuration);
+        
             services.RegisterSwagger();
             services.AddMediatR(typeof(CreatePlayerCommand).Assembly);
             var builder = new ContainerBuilder();
