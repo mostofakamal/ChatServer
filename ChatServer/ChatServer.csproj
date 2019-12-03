@@ -10,6 +10,10 @@
     <DocumentationFile>ApiDocumentation\ChatServer.xml</DocumentationFile>
     <NoWarn>1701;1702;1591;</NoWarn>
   </PropertyGroup>
+ 
+  <ItemGroup>
+    <Content Include="ApiDocumentation\ChatServer.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
@@ -24,10 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebApi.Infrastructure\WebApi.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ApiDocumentation\" />
   </ItemGroup>
 
 </Project>
