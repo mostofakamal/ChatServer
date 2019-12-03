@@ -54,7 +54,7 @@ namespace ChatServer.Controllers
 
         // POST api/groups
         /// <summary>
-        /// Joins a group
+        /// Joins in a group
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

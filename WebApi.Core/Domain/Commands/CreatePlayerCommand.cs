@@ -2,7 +2,9 @@
 
 namespace WebApi.Core.Domain.Commands
 {
-
+    /// <summary>
+    /// Player create command
+    /// </summary>
     public class CreatePlayerCommand : IRequest<CreatePlayerResponse>
     {
         public string FirstName { get; set; }

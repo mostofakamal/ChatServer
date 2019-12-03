@@ -7,7 +7,7 @@ using WebApi.Core.Domain.Queries;
 namespace ChatServer.Controllers
 {
     /// <summary>
-    /// 
+    /// The authentication controller
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -22,7 +22,7 @@ namespace ChatServer.Controllers
 
         // POST api/auth/login
         /// <summary>
-        /// 
+        /// Gets the token for a user 
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -30,7 +30,6 @@ namespace ChatServer.Controllers
         public async Task<IActionResult> Login(GetTokenCommand request)
         {
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
-
             var result = await _mediator.Send(request);
             if (result != null)
             {

@@ -21,7 +21,7 @@ namespace ChatServer.Controllers
 
         // POST api/accounts
         /// <summary>
-        /// Creates Player
+        /// Creates Player user
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>

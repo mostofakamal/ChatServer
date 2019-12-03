@@ -11,19 +11,19 @@
         </member>
         <member name="M:ChatServer.Controllers.AccountsController.Post(WebApi.Core.Domain.Commands.CreatePlayerCommand)">
             <summary>
-            Creates Player
+            Creates Player user
             </summary>
             <param name="request"></param>
             <returns></returns>
         </member>
         <member name="T:ChatServer.Controllers.AuthController">
             <summary>
-            
+            The authentication controller
             </summary>
         </member>
         <member name="M:ChatServer.Controllers.AuthController.Login(WebApi.Core.Domain.Queries.GetTokenCommand)">
             <summary>
-            
+            Gets the token for a user 
             </summary>
             <param name="request"></param>
             <returns></returns>
@@ -48,7 +48,7 @@
         </member>
         <member name="M:ChatServer.Controllers.GroupsController.JoinGroup(System.Int32)">
             <summary>
-            Joins a group
+            Joins in a group
             </summary>
             <param name="id"></param>
             <returns></returns>
