@@ -7,7 +7,7 @@ using WebApi.Core.Interfaces.Repositories;
 using WebApi.Core.Interfaces.Services;
 using Xunit;
 
-namespace WebApi.Core.UnitTests.Commands
+namespace WebApi.Core.UnitTests.Domain.Commands
 {
     public class GetTokenCommandHandlerTests
     {
