@@ -40,7 +40,7 @@ For Authentication i have used JWT token claim-based authentication approach whi
 
 It is the ASP.NET Core Web API acting as a chat server.Here i have used signalR for real time communication. 
 The swagger documentation of the Web API contains all the details of the endpoints and request response.
-Authorized endpoints require 'Bearer <token>' in the header of the request. 
+Authorized endpoints require 'Bearer <token>' in the header of the request.  There is a appsetting named AllowCorsOrigins which contains the chat client list url for this chat server to whitelist them in the CORS policy. Multiple urls can be added comma seperated.
 
 
 This is hosted on Azure Web App service in the link provided above
